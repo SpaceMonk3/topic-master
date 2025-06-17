@@ -39,6 +39,17 @@ export default function DashboardPage() {
     }
   }, [user]);
 
+  const formatDate = (timestamp) => {
+    try {
+      const date = timestamp?.toDate ? 
+        timestamp.toDate() : 
+        new Date(timestamp);
+      return format(date, 'MMM d, yyyy');
+    } catch (error) {
+      return 'Recently';
+    }
+  };
+
   const loadDashboardData = async () => {
     if (!user) return;
 
@@ -198,16 +209,7 @@ export default function DashboardPage() {
                             {session.quiz?.subject || 'Unknown'}
                           </Badge>
                           <span className="text-xs text-gray-500">
-                            {(() => {
-                              try {
-                                const date = session.completedAt?.toDate ? 
-                                  session.completedAt.toDate() : 
-                                  new Date(session.completedAt);
-                                return format(date, 'MMM d, yyyy');
-                              } catch (error) {
-                                return 'Recently';
-                              }
-                            })()}
+                            {formatDate(session.completedAt)}
                           </span>
                         </div>
                       </div>
