@@ -6,7 +6,7 @@ import { Toaster } from '@/components/ui/sonner';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'QuizGen - Personalized Learning Quiz Generator',
+  title: 'Topic Master - Personalized Learning Quiz Generator',
   description: 'Generate personalized quizzes from your lecture notes using AI',
 };
 

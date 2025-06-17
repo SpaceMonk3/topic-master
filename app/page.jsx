@@ -38,7 +38,7 @@ export default function Home() {
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-2">
               <Brain className="h-8 w-8 text-indigo-600" />
-              <span className="text-xl font-bold text-gray-900">QuizGen</span>
+              <span className="text-xl font-bold text-gray-900">Topic Master</span>
             </div>
             <div className="space-x-4">
               <Button variant="ghost" asChild>
@@ -146,7 +146,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-extrabold text-gray-900 mb-6">
-                Why Choose QuizGen?
+                Why Choose Topic Master?
               </h2>
               
               <div className="space-y-4">
@@ -190,7 +190,7 @@ export default function Home() {
                   <Users className="h-16 w-16 mx-auto opacity-80" />
                   <h3 className="text-2xl font-bold">Ready to Get Started?</h3>
                   <p className="text-indigo-100">
-                    Join thousands of students who are already using QuizGen to improve their learning outcomes
+                    Join thousands of students who are already using Topic Master to improve their learning outcomes
                   </p>
                   <Button size="lg" variant="secondary" className="mt-6" asChild>
                     <Link href="/register">
@@ -211,7 +211,7 @@ export default function Home() {
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
               <Brain className="h-6 w-6 text-indigo-600" />
-              <span className="text-lg font-bold text-gray-900">QuizGen</span>
+              <span className="text-lg font-bold text-gray-900">Topic Master</span>
             </div>
             <p className="text-gray-600">
               Transforming learning with AI-powered personalized quizzes

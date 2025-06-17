@@ -52,7 +52,7 @@ export function Navigation() {
           <div className="flex items-center">
             <Link href="/dashboard" className="flex items-center space-x-2">
               <Brain className="h-8 w-8 text-indigo-600" />
-              <span className="font-bold text-xl text-gray-900">QuizGen</span>
+              <span className="font-bold text-xl text-gray-900">Topic Master</span>
             </Link>
             
             {/* Desktop Navigation */}

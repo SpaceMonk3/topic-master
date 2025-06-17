@@ -55,7 +55,7 @@ export function RegisterForm() {
             <Brain className="h-12 w-12 text-indigo-600" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900">Get Started</h1>
-          <p className="text-gray-600 mt-2">Create your QuizGen account</p>
+          <p className="text-gray-600 mt-2">Create your Topic Master account</p>
         </div>
 
         <Card className="shadow-xl border-0">
