@@ -10,12 +10,17 @@ const nextConfig = {
       config.resolve.fallback = {
         ...config.resolve.fallback,
         "undici": false,
+        "net": false,
+        "tls": false,
+        "fs": false,
+        "dns": false,
+        "child_process": false,
       };
     }
     return config;
   },
   experimental: {
-    serverComponentsExternalPackages: ['undici'],
+    serverComponentsExternalPackages: ['undici', 'firebase'],
   },
 };
 

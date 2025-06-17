@@ -43,7 +43,7 @@
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
     "embla-carousel-react": "^8.0.0",
-    "firebase": "^10.7.1",
+    "firebase": "9.23.0",
     "input-otp": "^1.1.0",
     "lucide-react": "^0.294.0",
     "next": "13.4.19",
