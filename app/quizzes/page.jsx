@@ -138,7 +138,16 @@ export default function QuizzesPage() {
                       </div>
                       
                       <div className="text-xs text-gray-500">
-                        Created {new Date(quiz.createdAt?.seconds * 1000 || Date.now()).toLocaleDateString()}
+                        Created {(() => {
+                          try {
+                            const date = quiz.createdAt?.toDate ? 
+                              quiz.createdAt.toDate() : 
+                              new Date(quiz.createdAt);
+                            return date.toLocaleDateString();
+                          } catch (error) {
+                            return 'Recently';
+                          }
+                        })()}
                       </div>
 
                       <Button 

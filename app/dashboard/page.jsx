@@ -195,10 +195,19 @@ export default function DashboardPage() {
                         <h4 className="font-medium text-sm">{session.quiz.title}</h4>
                         <div className="flex items-center space-x-2 mt-1">
                           <Badge variant="outline" className="text-xs">
-                            {session.quiz.subject}
+                            {session.quiz?.subject || 'Unknown'}
                           </Badge>
                           <span className="text-xs text-gray-500">
-                            {format(new Date(session.completedAt), 'MMM d, yyyy')}
+                            {(() => {
+                              try {
+                                const date = session.completedAt?.toDate ? 
+                                  session.completedAt.toDate() : 
+                                  new Date(session.completedAt);
+                                return format(date, 'MMM d, yyyy');
+                              } catch (error) {
+                                return 'Recently';
+                              }
+                            })()}
                           </span>
                         </div>
                       </div>
