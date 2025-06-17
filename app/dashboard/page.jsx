@@ -57,7 +57,7 @@ export default function DashboardPage() {
       // Get subject performance
       const subjectScores = {};
       sessions.forEach(session => {
-        const subject = session.quiz.subject;
+        const subject = session.quiz?.subject || 'Unknown';
         if (!subjectScores[subject]) {
           subjectScores[subject] = [];
         }
@@ -83,6 +83,16 @@ export default function DashboardPage() {
       });
     } catch (error) {
       console.error('Error loading dashboard data:', error);
+      // Set default stats on error
+      setStats({
+        totalQuizzes: 0,
+        averageScore: 0,
+        totalTimeSpent: 0,
+        strongestSubjects: [],
+        weakestSubjects: [],
+        recentPerformance: [],
+      });
+      setRecentSessions([]);
     } finally {
       setIsLoading(false);
     }
