@@ -29,12 +29,15 @@ export function QuizCreator() {
   const router = useRouter();
 
   const handleFileUpload = (e) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files && e.target.files[0];
     if (file) {
       if (file.type === 'text/plain') {
         const reader = new FileReader();
-        reader.onload = (e) => {
-          setContent(e.target?.result);
+        reader.onload = (event) => {
+          const result = event.target && event.target.result;
+          if (result) {
+            setContent(result);
+          }
         };
         reader.readAsText(file);
       } else {
@@ -197,7 +200,7 @@ export function QuizCreator() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="difficulty">Difficulty Level</Label>
-                <Select value={difficulty} onValueChange={(value) => setDifficulty(value)}>
+                <Select value={difficulty} onValueChange={setDifficulty}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -211,7 +214,10 @@ export function QuizCreator() {
 
               <div className="space-y-2">
                 <Label htmlFor="numberOfQuestions">Number of Questions</Label>
-                <Select value={numberOfQuestions.toString()} onValueChange={(value) => setNumberOfQuestions(parseInt(value))}>
+                <Select 
+                  value={numberOfQuestions.toString()} 
+                  onValueChange={(value) => setNumberOfQuestions(parseInt(value))}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
