@@ -60,7 +60,8 @@ export function QuizTaker({ quiz }) {
       timeSpent: questionTimeSpent,
     };
 
-    const newAnswers = [...answers, userAnswer];
+    const newAnswers = [...answers];
+    newAnswers[currentQuestion] = userAnswer;
     setAnswers(newAnswers);
 
     if (currentQuestion < quiz.questions.length - 1) {
