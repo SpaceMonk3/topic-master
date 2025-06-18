@@ -79,6 +79,7 @@ export function RegisterForm() {
                   placeholder="Enter your full name"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
+                  autoComplete="name"
                   required
                   disabled={isLoading}
                 />
@@ -92,6 +93,7 @@ export function RegisterForm() {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="email"
                   required
                   disabled={isLoading}
                 />
@@ -105,6 +107,7 @@ export function RegisterForm() {
                   placeholder="Create a password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="new-password"
                   required
                   disabled={isLoading}
                 />
@@ -118,6 +121,7 @@ export function RegisterForm() {
                   placeholder="Confirm your password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  autoComplete="new-password"
                   required
                   disabled={isLoading}
                 />

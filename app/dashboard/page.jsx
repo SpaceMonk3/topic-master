@@ -133,8 +133,8 @@ export default function DashboardPage() {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer" asChild>
-            <Link href="/create">
+          <Link href="/create">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4">
                   <div className="p-2 bg-indigo-100 rounded-lg">
@@ -146,11 +146,11 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </CardContent>
-            </Link>
-          </Card>
+            </Card>
+          </Link>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer" asChild>
-            <Link href="/quizzes">
+          <Link href="/quizzes">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4">
                   <div className="p-2 bg-emerald-100 rounded-lg">
@@ -162,11 +162,11 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </CardContent>
-            </Link>
-          </Card>
+            </Card>
+          </Link>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer" asChild>
-            <Link href="/notes">
+          <Link href="/notes">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4">
                   <div className="p-2 bg-amber-100 rounded-lg">
@@ -178,8 +178,8 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </CardContent>
-            </Link>
-          </Card>
+            </Card>
+          </Link>
         </div>
 
         {/* Stats */}
@@ -232,9 +232,9 @@ export default function DashboardPage() {
                 <div className="text-center py-8">
                   <Brain className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-600 mb-4">No quiz activity yet</p>
-                  <Button asChild>
-                    <Link href="/create">Create Your First Quiz</Link>
-                  </Button>
+                  <Link href="/create">
+                    <Button>Create Your First Quiz</Button>
+                  </Link>
                 </div>
               )}
             </CardContent>
@@ -277,9 +277,9 @@ export default function DashboardPage() {
                 {stats.totalQuizzes === 0 && (
                   <div className="text-center py-4">
                     <p className="text-gray-600 mb-4">Complete more quizzes to see insights</p>
-                    <Button variant="outline" asChild>
-                      <Link href="/create">Get Started</Link>
-                    </Button>
+                    <Link href="/create">
+                      <Button variant="outline">Get Started</Button>
+                    </Link>
                   </div>
                 )}
               </div>
