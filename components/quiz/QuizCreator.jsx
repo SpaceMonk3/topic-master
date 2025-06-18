@@ -11,7 +11,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
-import { generateQuiz } from '@/lib/services/openai';
 import { saveQuiz } from '@/lib/services/quiz';
 import { Loader2, Upload, Brain, Sparkles } from 'lucide-react';
 
@@ -70,13 +69,25 @@ export function QuizCreator() {
     const progressInterval = simulateProgress();
 
     try {
-      // Generate quiz using OpenAI
-      const questions = await generateQuiz({
-        content,
-        subject,
-        difficulty,
-        numberOfQuestions,
+      // Generate quiz using server-side API
+      const res = await fetch('/api/generate-quiz', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          content,
+          subject,
+          difficulty,
+          numberOfQuestions,
+        })
       });
+
+      if (!res.ok) {
+        throw new Error('Failed to generate quiz');
+      }
+
+      const { questions } = await res.json();
 
       setProgress(95);
 
