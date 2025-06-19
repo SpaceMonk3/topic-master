@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { Navigation } from '@/components/Navigation';
@@ -16,6 +16,17 @@ export default function QuizzesPage() {
   const [quizzes, setQuizzes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const loadQuizzes = useCallback(async () => {
+    try {
+      const userQuizzes = await getUserQuizzes(user.uid);
+      setQuizzes(userQuizzes);
+    } catch (error) {
+      console.error('Error loading quizzes:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [user]);
+
   useEffect(() => {
     if (!loading && !user) {
       router.push('/login');
@@ -26,18 +37,7 @@ export default function QuizzesPage() {
     if (user) {
       loadQuizzes();
     }
-  }, [user]);
-
-  const loadQuizzes = async () => {
-    try {
-      const userQuizzes = await getUserQuizzes(user.uid);
-      setQuizzes(userQuizzes);
-    } catch (error) {
-      console.error('Error loading quizzes:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, [user, loadQuizzes]);
 
   if (loading || !user) {
     return (

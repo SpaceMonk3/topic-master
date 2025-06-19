@@ -231,7 +231,7 @@ export function QuizTaker({ quiz }) {
           <span>Progress</span>
           <span>{Math.round(progress)}%</span>
         </div>
-        <Progress value={progress} className="h-2" />
+        <Progress value={progress} max={100} className="h-2" />
       </div>
 
       {/* Question */}

@@ -139,7 +139,7 @@ export function QuizCreator() {
                 </p>
               </div>
               <div className="space-y-2">
-                <Progress value={progress} className="w-full" />
+                <Progress value={progress} max={100} className="w-full" />
                 <p className="text-xs text-muted-foreground">{Math.round(progress)}% complete</p>
               </div>
             </div>

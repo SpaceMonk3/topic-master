@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { Navigation } from '@/components/Navigation';
@@ -27,18 +27,6 @@ export default function DashboardPage() {
   const [recentSessions, setRecentSessions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login');
-    }
-  }, [user, loading, router]);
-
-  useEffect(() => {
-    if (user) {
-      loadDashboardData();
-    }
-  }, [user]);
-
   const formatDate = (timestamp) => {
     try {
       const date = timestamp?.toDate ? 
@@ -50,7 +38,7 @@ export default function DashboardPage() {
     }
   };
 
-  const loadDashboardData = async () => {
+  const loadDashboardData = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -68,7 +56,7 @@ export default function DashboardPage() {
       // Get subject performance
       const subjectScores = {};
       sessions.forEach(session => {
-        const subject = session.quiz?.subject || 'Unknown';
+        const subject = session.quiz?.subject || "Unknown";
         if (!subjectScores[subject]) {
           subjectScores[subject] = [];
         }
@@ -107,7 +95,19 @@ export default function DashboardPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
+
+  useEffect(() => {
+    if (user) {
+      loadDashboardData();
+    }
+  }, [user, loadDashboardData]);
 
   if (loading || !user) {
     return (
@@ -127,7 +127,7 @@ export default function DashboardPage() {
             Welcome back, {user.displayName || user.email}!
           </h1>
           <p className="text-gray-600 mt-2">
-            Here's your learning progress and recent activity
+            Here&apos;s your learning progress and recent activity
           </p>
         </div>
 
@@ -206,7 +206,7 @@ export default function DashboardPage() {
                         <h4 className="font-medium text-sm">{session.quiz.title}</h4>
                         <div className="flex items-center space-x-2 mt-1">
                           <Badge variant="outline" className="text-xs">
-                            {session.quiz?.subject || 'Unknown'}
+                            {session.quiz?.subject || "Unknown"}
                           </Badge>
                           <span className="text-xs text-gray-500">
                             {formatDate(session.completedAt)}

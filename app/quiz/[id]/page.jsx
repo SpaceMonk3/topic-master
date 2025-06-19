@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Navigation } from '@/components/Navigation';
@@ -20,19 +20,7 @@ export default function QuizPage() {
   const [hasStarted, setHasStarted] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login');
-    }
-  }, [user, loading, router]);
-
-  useEffect(() => {
-    if (params.id && user) {
-      loadQuiz();
-    }
-  }, [params.id, user]);
-
-  const loadQuiz = async () => {
+  const loadQuiz = useCallback(async () => {
     try {
       const quizData = await getQuiz(params.id);
       if (quizData) {
@@ -46,7 +34,19 @@ export default function QuizPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [params.id]);
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
+
+  useEffect(() => {
+    if (params.id && user) {
+      loadQuiz();
+    }
+  }, [params.id, user, loadQuiz]);
 
   if (loading || !user || isLoading) {
     return (
@@ -81,7 +81,7 @@ export default function QuizPage() {
           <Card>
             <CardContent className="pt-6 text-center">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Quiz Not Found</h2>
-              <p className="text-gray-600 mb-4">The quiz you're looking for doesn't exist.</p>
+              <p className="text-gray-600 mb-4">The quiz you&apos;re looking for doesn&apos;t exist.</p>
               <Button onClick={() => router.push('/dashboard')}>Go to Dashboard</Button>
             </CardContent>
           </Card>
@@ -143,7 +143,7 @@ export default function QuizPage() {
                   <Clock className="h-8 w-8 text-amber-600" />
                   <div>
                     <div className="font-semibold text-amber-900">
-                      {quiz.timeLimit ? `${quiz.timeLimit} min` : 'No limit'}
+                      {quiz.timeLimit ? `${quiz.timeLimit} min` : "No limit"}
                     </div>
                     <div className="text-sm text-amber-600">Time Limit</div>
                   </div>
@@ -158,7 +158,7 @@ export default function QuizPage() {
                   <li>• You can navigate between questions using the Previous/Next buttons</li>
                   <li>• Your answers are automatically saved as you progress</li>
                   <li>• Review your answers before submitting the quiz</li>
-                  <li>• You'll receive immediate feedback and explanations after completion</li>
+                  <li>• You&apos;ll receive immediate feedback and explanations after completion</li>
                 </ul>
               </div>
 
