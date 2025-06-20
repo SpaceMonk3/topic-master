@@ -93,18 +93,38 @@ export function QuizTaker({ quiz }) {
     setIsCompleted(true);
 
     try {
-      const session = {
-        quizId: quiz.id,
-        userId: user.uid,
-        answers: finalAnswers,
-        score: finalScore,
-        totalQuestions: quiz.questions.length,
-        completedAt: new Date(),
-        timeSpent,
-        quiz,
+      // Create a simplified quiz object to avoid circular references
+      const simplifiedQuiz = {
+        id: quiz.id || '',
+        title: quiz.title || 'Untitled Quiz',
+        subject: quiz.subject || 'General',
+        difficulty: quiz.difficulty || 'medium',
+        createdBy: quiz.createdBy || user.uid,
+        totalQuestions: quiz.questions ? quiz.questions.length : 0
       };
 
+      // Process answers to ensure no undefined values
+      const processedAnswers = finalAnswers.map(answer => ({
+        questionId: answer.questionId || '',
+        selectedAnswer: answer.selectedAnswer !== undefined ? answer.selectedAnswer : -1,
+        isCorrect: !!answer.isCorrect,
+        timeSpent: answer.timeSpent || 0,
+      }));
+
+      const session = {
+        quizId: quiz.id || '',
+        userId: user.uid,
+        answers: processedAnswers,
+        score: finalScore,
+        totalQuestions: quiz.questions ? quiz.questions.length : 0,
+        completedAt: new Date(),
+        timeSpent: timeSpent || 0,
+        quiz: simplifiedQuiz,
+      };
+
+      console.log("Saving quiz session:", JSON.stringify(session));
       await saveQuizSession(session);
+      console.log("Quiz session saved successfully!");
     } catch (error) {
       console.error('Error saving quiz session:', error);
     }

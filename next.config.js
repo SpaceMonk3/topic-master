@@ -14,7 +14,7 @@ const nextConfig = {
     ignoreDuringBuilds: false,
   },
   images: { unoptimized: true },
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {

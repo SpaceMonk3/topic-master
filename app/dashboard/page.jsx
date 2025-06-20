@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { Navigation } from '@/components/Navigation';
@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { getUserQuizSessions } from '@/lib/services/quiz';
-import { Brain, Plus, BookOpen, TrendingUp, Clock } from 'lucide-react';
+import { Brain, Plus, BookOpen, TrendingUp, Clock, RefreshCw } from 'lucide-react';
 import Link from 'next/link';
 import { format } from 'date-fns';
 
@@ -26,6 +26,8 @@ export default function DashboardPage() {
   });
   const [recentSessions, setRecentSessions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const lastLoadTime = useRef(0);
 
   const formatDate = (timestamp) => {
     try {
@@ -38,48 +40,100 @@ export default function DashboardPage() {
     }
   };
 
-  const loadDashboardData = useCallback(async () => {
+  const loadDashboardData = useCallback(async (force = false) => {
     if (!user) return;
+    
+    // Don't reload data if it was loaded less than 5 seconds ago (unless forced)
+    const now = Date.now();
+    if (!force && now - lastLoadTime.current < 5000) {
+      return;
+    }
+    
+    setIsLoading(true);
+    setRefreshing(true);
 
     try {
+      console.log("Loading dashboard data...");
       const sessions = await getUserQuizSessions(user.uid);
-      setRecentSessions(sessions.slice(0, 5));
+      console.log(`Found ${sessions.length} quiz sessions`, sessions);
+      
+      if (sessions.length > 0) {
+        setRecentSessions(sessions.slice(0, 5));
 
-      // Calculate stats
-      const totalQuizzes = sessions.length;
-      const averageScore = sessions.length > 0 
-        ? sessions.reduce((sum, session) => sum + session.score, 0) / sessions.length 
-        : 0;
-      const totalTimeSpent = sessions.reduce((sum, session) => sum + session.timeSpent, 0);
-      const recentPerformance = sessions.slice(0, 10).map(session => session.score);
+        // Calculate stats
+        const totalQuizzes = sessions.length;
+        
+        // Calculate average score safely
+        let totalScore = 0;
+        sessions.forEach(session => {
+          if (typeof session.score === 'number') {
+            totalScore += session.score;
+          }
+        });
+        const averageScore = totalQuizzes > 0 ? totalScore / totalQuizzes : 0;
+        
+        // Calculate total time spent safely
+        const totalTimeSpent = sessions.reduce((sum, session) => {
+          return sum + (typeof session.timeSpent === 'number' ? session.timeSpent : 0);
+        }, 0);
+        
+        // Get recent performance scores
+        const recentPerformance = sessions
+          .slice(0, 10)
+          .map(session => typeof session.score === 'number' ? session.score : 0);
 
-      // Get subject performance
-      const subjectScores = {};
-      sessions.forEach(session => {
-        const subject = session.quiz?.subject || "Unknown";
-        if (!subjectScores[subject]) {
-          subjectScores[subject] = [];
-        }
-        subjectScores[subject].push(session.score);
-      });
+        // Get subject performance
+        const subjectScores = {};
+        sessions.forEach(session => {
+          const subject = session.quiz?.subject || "Unknown";
+          if (!subjectScores[subject]) {
+            subjectScores[subject] = [];
+          }
+          if (typeof session.score === 'number') {
+            subjectScores[subject].push(session.score);
+          }
+        });
 
-      const subjectAverages = Object.entries(subjectScores).map(([subject, scores]) => ({
-        subject,
-        average: scores.reduce((sum, score) => sum + score, 0) / scores.length,
-      }));
+        const subjectAverages = Object.entries(subjectScores).map(([subject, scores]) => ({
+          subject,
+          average: scores.length > 0 ? scores.reduce((sum, score) => sum + score, 0) / scores.length : 0,
+        }));
 
-      const sortedSubjects = subjectAverages.sort((a, b) => b.average - a.average);
-      const strongestSubjects = sortedSubjects.slice(0, 3).map(s => s.subject);
-      const weakestSubjects = sortedSubjects.slice(-3).reverse().map(s => s.subject);
+        const sortedSubjects = subjectAverages.sort((a, b) => b.average - a.average);
+        const strongestSubjects = sortedSubjects.slice(0, 3).map(s => s.subject);
+        const weakestSubjects = sortedSubjects.slice(-3).reverse().map(s => s.subject);
 
-      setStats({
-        totalQuizzes,
-        averageScore,
-        totalTimeSpent,
-        strongestSubjects,
-        weakestSubjects,
-        recentPerformance,
-      });
+        console.log("Dashboard stats calculated:", {
+          totalQuizzes,
+          averageScore,
+          totalTimeSpent,
+          strongestSubjects,
+          weakestSubjects
+        });
+
+        setStats({
+          totalQuizzes,
+          averageScore,
+          totalTimeSpent,
+          strongestSubjects,
+          weakestSubjects,
+          recentPerformance,
+        });
+      } else {
+        console.log("No quiz sessions found, setting default stats");
+        // Set default stats when no sessions are found
+        setStats({
+          totalQuizzes: 0,
+          averageScore: 0,
+          totalTimeSpent: 0,
+          strongestSubjects: [],
+          weakestSubjects: [],
+          recentPerformance: [],
+        });
+        setRecentSessions([]);
+      }
+      
+      lastLoadTime.current = now;
     } catch (error) {
       console.error('Error loading dashboard data:', error);
       // Set default stats on error
@@ -94,8 +148,28 @@ export default function DashboardPage() {
       setRecentSessions([]);
     } finally {
       setIsLoading(false);
+      setRefreshing(false);
     }
   }, [user]);
+
+  // Refresh when user navigates back to this page
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        loadDashboardData(true);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    // Also refresh on focus
+    window.addEventListener('focus', () => loadDashboardData(true));
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', () => loadDashboardData(true));
+    };
+  }, [loadDashboardData]);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -105,9 +179,13 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (user) {
-      loadDashboardData();
+      loadDashboardData(true);
     }
   }, [user, loadDashboardData]);
+
+  const handleRefresh = () => {
+    loadDashboardData(true);
+  };
 
   if (loading || !user) {
     return (
@@ -122,13 +200,24 @@ export default function DashboardPage() {
       <Navigation />
       
       <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Welcome back, {user.displayName || user.email}!
-          </h1>
-          <p className="text-gray-600 mt-2">
-            Here&apos;s your learning progress and recent activity
-          </p>
+        <div className="mb-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Welcome back, {user.displayName || user.email}!
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Here&apos;s your learning progress and recent activity
+            </p>
+          </div>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleRefresh}
+            disabled={refreshing}
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
         </div>
 
         {/* Quick Actions */}
@@ -203,7 +292,7 @@ export default function DashboardPage() {
                   {recentSessions.map((session) => (
                     <div key={session.id} className="flex items-center justify-between p-3 border rounded-lg">
                       <div className="flex-1">
-                        <h4 className="font-medium text-sm">{session.quiz.title}</h4>
+                        <h4 className="font-medium text-sm">{session.quiz?.title || "Untitled Quiz"}</h4>
                         <div className="flex items-center space-x-2 mt-1">
                           <Badge variant="outline" className="text-xs">
                             {session.quiz?.subject || "Unknown"}
@@ -222,7 +311,7 @@ export default function DashboardPage() {
                         </div>
                         <div className="text-xs text-gray-500 flex items-center">
                           <Clock className="h-3 w-3 mr-1" />
-                          {Math.floor(session.timeSpent / 60)}m
+                          {Math.floor((session.timeSpent || 0) / 60)}m
                         </div>
                       </div>
                     </div>

@@ -4,6 +4,27 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Trophy, Clock, Target, TrendingUp } from 'lucide-react';
 
 export function DashboardStats({ stats }) {
+  // Format time in minutes and seconds
+  const formatTimeSpent = (seconds) => {
+    if (!seconds) return '0m';
+    
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    
+    if (hours > 0) {
+      return `${hours}h ${minutes % 60}m`;
+    }
+    return `${minutes}m`;
+  };
+  
+  // Get the latest performance score
+  const getLatestScore = () => {
+    if (!stats.recentPerformance || stats.recentPerformance.length === 0) {
+      return 0;
+    }
+    return Math.round(stats.recentPerformance[0]);
+  };
+
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
@@ -12,7 +33,7 @@ export function DashboardStats({ stats }) {
           <Target className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{stats.totalQuizzes}</div>
+          <div className="text-2xl font-bold">{stats.totalQuizzes || 0}</div>
           <p className="text-xs text-muted-foreground">
             Quizzes completed
           </p>
@@ -25,7 +46,7 @@ export function DashboardStats({ stats }) {
           <Trophy className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{Math.round(stats.averageScore)}%</div>
+          <div className="text-2xl font-bold">{Math.round(stats.averageScore || 0)}%</div>
           <p className="text-xs text-muted-foreground">
             Across all quizzes
           </p>
@@ -39,7 +60,7 @@ export function DashboardStats({ stats }) {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            {Math.floor(stats.totalTimeSpent / 60)}m
+            {formatTimeSpent(stats.totalTimeSpent)}
           </div>
           <p className="text-xs text-muted-foreground">
             Total study time
@@ -54,10 +75,7 @@ export function DashboardStats({ stats }) {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            {stats.recentPerformance.length > 0 
-              ? Math.round(stats.recentPerformance[stats.recentPerformance.length - 1])
-              : 0
-            }%
+            {getLatestScore()}%
           </div>
           <p className="text-xs text-muted-foreground">
             Latest quiz score
