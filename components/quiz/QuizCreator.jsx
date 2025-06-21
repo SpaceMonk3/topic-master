@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,8 +11,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
-import { saveQuiz } from '@/lib/services/quiz';
+import { saveQuiz, getLectureNote } from '@/lib/services/quiz';
 import { Loader2, Upload, Brain, Sparkles } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export function QuizCreator() {
   const [title, setTitle] = useState('');
@@ -22,10 +23,43 @@ export function QuizCreator() {
   const [difficulty, setDifficulty] = useState('medium');
   const [numberOfQuestions, setNumberOfQuestions] = useState(5);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState('');
   const { user } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { toast } = useToast();
+  
+  // Check if creating quiz from a note
+  useEffect(() => {
+    const loadNoteContent = async () => {
+      const noteId = searchParams.get('noteId');
+      if (!noteId || !user) return;
+      
+      setIsLoading(true);
+      try {
+        const note = await getLectureNote(noteId);
+        if (note) {
+          setTitle(note.title ? `Quiz on ${note.title}` : 'New Quiz');
+          setSubject(note.subject || '');
+          setContent(note.content || '');
+          setDescription(note.title ? `Quiz generated from "${note.title}" notes` : '');
+        }
+      } catch (error) {
+        console.error('Error loading note:', error);
+        toast({
+          title: 'Error',
+          description: 'Failed to load note content. Please try again.',
+          variant: 'destructive',
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    loadNoteContent();
+  }, [searchParams, user, toast]);
 
   const handleFileUpload = (e) => {
     const file = e.target.files && e.target.files[0];
@@ -63,6 +97,21 @@ export function QuizCreator() {
     e.preventDefault();
     if (!user) return;
 
+    if (!title.trim()) {
+      setError('Please enter a title for your quiz');
+      return;
+    }
+
+    if (!subject.trim()) {
+      setError('Please enter a subject for your quiz');
+      return;
+    }
+
+    if (!content.trim()) {
+      setError('Please enter or upload some content');
+      return;
+    }
+
     setError('');
     setIsGenerating(true);
     
@@ -91,18 +140,28 @@ export function QuizCreator() {
 
       setProgress(95);
 
-      // Save quiz to Firebase
-      const quizId = await saveQuiz({
-        title,
-        description,
+      // Save quiz to Firebase with proper validation
+      const quizData = {
+        title: title.trim(),
+        description: description.trim(),
         questions,
         createdBy: user.uid,
         difficulty,
-        subject,
+        subject: subject.trim(),
         createdAt: new Date(),
-      });
+        // Add source note ID if creating from a note
+        sourceNoteId: searchParams.get('noteId') || null,
+      };
+
+      const quizId = await saveQuiz(quizData);
 
       setProgress(100);
+      
+      // Show success toast
+      toast({
+        title: 'Success',
+        description: 'Quiz created successfully!',
+      });
       
       // Redirect to quiz view
       setTimeout(() => {
@@ -119,6 +178,14 @@ export function QuizCreator() {
       }, 500);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
 
   if (isGenerating) {
     return (
@@ -154,7 +221,9 @@ export function QuizCreator() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Create New Quiz</h1>
         <p className="text-gray-600 mt-2">
-          Upload your lecture notes and let AI generate personalized quiz questions
+          {searchParams.get('noteId') 
+            ? 'Generate a quiz from your selected lecture notes' 
+            : 'Upload your lecture notes and let AI generate personalized quiz questions'}
         </p>
       </div>
 
@@ -245,28 +314,31 @@ export function QuizCreator() {
             <div className="space-y-2">
               <Label htmlFor="content">Lecture Notes</Label>
               <div className="space-y-4">
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
-                  <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                  <div className="mt-4">
-                    <Label htmlFor="file-upload" className="cursor-pointer">
-                      <span className="mt-2 block text-sm font-medium text-gray-900">
-                        Upload lecture notes
-                      </span>
-                      <span className="text-xs text-gray-500">
-                        Text files only (.txt)
-                      </span>
-                    </Label>
-                    <Input
-                      id="file-upload"
-                      type="file"
-                      accept=".txt"
-                      className="hidden"
-                      onChange={handleFileUpload}
-                    />
-                  </div>
-                </div>
-
-                <div className="text-center text-sm text-gray-500">or</div>
+                {!searchParams.get('noteId') && (
+                  <>
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
+                      <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                      <div className="mt-4">
+                        <Label htmlFor="file-upload" className="cursor-pointer">
+                          <span className="mt-2 block text-sm font-medium text-gray-900">
+                            Upload lecture notes
+                          </span>
+                          <span className="text-xs text-gray-500">
+                            Text files only (.txt)
+                          </span>
+                        </Label>
+                        <Input
+                          id="file-upload"
+                          type="file"
+                          accept=".txt"
+                          className="hidden"
+                          onChange={handleFileUpload}
+                        />
+                      </div>
+                    </div>
+                    <div className="text-center text-sm text-gray-500">or</div>
+                  </>
+                )}
 
                 <Textarea
                   placeholder="Paste your lecture notes here..."
