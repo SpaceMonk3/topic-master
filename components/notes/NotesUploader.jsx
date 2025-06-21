@@ -11,7 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { saveLectureNotes } from '@/lib/services/quiz';
 import { Loader2, Upload, FileText } from 'lucide-react';
 
-export function NotesUploader({ isOpen, onClose, onSuccess }) {
+export function NotesUploader({ open, setOpen, onSuccess }) {
   const [title, setTitle] = useState('');
   const [subject, setSubject] = useState('');
   const [content, setContent] = useState('');
@@ -21,10 +21,10 @@ export function NotesUploader({ isOpen, onClose, onSuccess }) {
   
   // Reset form when dialog opens
   useEffect(() => {
-    if (isOpen) {
+    if (open) {
       resetForm();
     }
-  }, [isOpen]);
+  }, [open]);
 
   const resetForm = () => {
     setTitle('');
@@ -88,9 +88,7 @@ export function NotesUploader({ isOpen, onClose, onSuccess }) {
       if (onSuccess) {
         onSuccess();
       }
-      if (onClose) {
-        onClose();
-      }
+      setOpen(false);
     } catch (error) {
       console.error('Error saving notes:', error);
       setError(error.message || 'Failed to save notes');
@@ -100,7 +98,7 @@ export function NotesUploader({ isOpen, onClose, onSuccess }) {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose && onClose()}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Upload Lecture Notes</DialogTitle>
@@ -181,7 +179,7 @@ export function NotesUploader({ isOpen, onClose, onSuccess }) {
               variant="outline" 
               onClick={() => {
                 resetForm();
-                if (onClose) onClose();
+                setOpen(false);
               }}
               disabled={isUploading}
             >

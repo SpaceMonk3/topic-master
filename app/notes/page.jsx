@@ -91,12 +91,6 @@ export default function NotesPage() {
     console.log("isDialogOpen after setting:", true);
   };
 
-  const closeDialog = () => {
-    console.log("Closing notes uploader dialog - setting isDialogOpen to false");
-    setIsDialogOpen(false);
-    console.log("isDialogOpen after setting:", false);
-  };
-
   // Debug dialog state changes
   useEffect(() => {
     console.log("Dialog state changed:", isDialogOpen);
@@ -196,8 +190,8 @@ export default function NotesPage() {
       </div>
 
       <NotesUploader
-        isOpen={isDialogOpen}
-        onClose={closeDialog}
+        open={isDialogOpen}
+        setOpen={setIsDialogOpen}
         onSuccess={loadNotes}
       />
     </div>
