@@ -157,12 +157,12 @@ export default function Home() {
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl tracking-tight font-extrabold text-gray-900 mb-8">
-              <span className="block">Your AI-powered edge —</span>
-              <span className="gradient-text">Automate, Optimize and Dominate</span>
+              <span className="block">Personalized Quizzes</span>
+              <span className="gradient-text">From Your Study Notes</span>
             </h1>
             
             <p className="mt-6 max-w-2xl mx-auto text-xl text-gray-500">
-              Gain a competitive edge with AI-powered algorithms that streamline workflows, optimize performance, and drive growth.
+              Upload your lecture notes and let our AI create personalized quizzes to help you study smarter, not harder.
             </p>
             
             <div className="mt-10 flex flex-wrap justify-center gap-4">
@@ -173,7 +173,7 @@ export default function Home() {
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild className="px-8 py-6 rounded-full border-2 text-lg">
-                <Link href="/login">Contact sales</Link>
+                <Link href="/login">Sign In</Link>
               </Button>
             </div>
           </div>
@@ -194,38 +194,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          
-          {/* Trusted By */}
-          <div className="mt-20 text-center">
-            <p className="text-sm font-medium text-gray-500 mb-6">TRUSTED BY INDUSTRY LEADERS</p>
-            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-70">
-              <div className="text-gray-400">
-                <svg className="h-8" viewBox="0 0 100 30" fill="currentColor">
-                  <path d="M20,10 L25,10 L25,20 L20,20 Z M10,10 L15,10 L15,20 L10,20 Z M0,10 L5,10 L5,20 L0,20 Z" />
-                </svg>
-              </div>
-              <div className="text-gray-400">
-                <svg className="h-8" viewBox="0 0 100 30" fill="currentColor">
-                  <path d="M10,10 C10,5 15,5 15,10 C15,15 10,15 10,10 Z M20,10 L25,10 L25,20 L20,20 Z" />
-                </svg>
-              </div>
-              <div className="text-gray-400">
-                <svg className="h-8" viewBox="0 0 100 30" fill="currentColor">
-                  <path d="M0,10 L30,10 L15,20 Z" />
-                </svg>
-              </div>
-              <div className="text-gray-400">
-                <svg className="h-8" viewBox="0 0 100 30" fill="currentColor">
-                  <path d="M0,10 L10,10 L10,20 L0,20 Z M15,5 L25,5 L25,25 L15,25 Z" />
-                </svg>
-              </div>
-              <div className="text-gray-400">
-                <svg className="h-8" viewBox="0 0 100 30" fill="currentColor">
-                  <path d="M10,10 C20,5 20,15 10,20 C0,15 0,5 10,10 Z" />
-                </svg>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -234,7 +202,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
-              AI-driven features for smarter investing
+              AI-driven features for smarter learning
             </h2>
             <p className="max-w-3xl mx-auto text-xl text-gray-500">
               Everything you need to create, take, and track personalized quizzes with advanced AI technology
@@ -397,7 +365,7 @@ export default function Home() {
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
                   <div>
-                    <h4 className="font-bold text-gray-900">Student Name</h4>
+                    <h4 className="font-bold text-gray-900">Random Kid</h4>
                     <p className="text-sm text-gray-500">University Student</p>
                   </div>
                 </div>
@@ -407,64 +375,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-sky-500 to-blue-600 text-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to transform your learning experience?</h2>
-          <p className="text-xl text-sky-100 mb-10 max-w-3xl mx-auto">
-            Join Topic Master today and start creating personalized quizzes that adapt to your learning style.
-          </p>
-          <Button size="lg" variant="secondary" className="px-8 py-6 rounded-full text-sky-600 hover:text-sky-700 bg-white hover:bg-gray-100 shadow-lg transition-all text-lg" asChild>
-            <Link href="/register">
-              Get Started For Free
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="bg-gray-900 text-white pt-16 pb-12">
+      <footer className="bg-gray-900 text-white pt-5 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-            <div>
-              <h3 className="text-lg font-bold mb-4">Product</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Features</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Testimonials</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Company</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">About</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Careers</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Resources</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Terms</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Connect</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Twitter</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Facebook</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Instagram</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">LinkedIn</a></li>
-              </ul>
-            </div>
-          </div>
-          
           <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
               <Brain className="h-8 w-8 text-sky-500" />
