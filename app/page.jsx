@@ -7,12 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Brain, BookOpen, BarChart3, Sparkles, CheckCircle, Users, Zap, ArrowRight } from 'lucide-react';
+import { Brain, BookOpen, BarChart3, Sparkles, CheckCircle, Users, Zap, ArrowRight, Menu, X } from 'lucide-react';
 
 export default function Home() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,6 +34,11 @@ export default function Home() {
       router.push('/dashboard');
     }
   }, [user, loading, router]);
+
+  // Close mobile menu when clicking on a link
+  const handleNavLinkClick = () => {
+    setMobileMenuOpen(false);
+  };
 
   if (loading) {
     return (
@@ -62,7 +68,7 @@ export default function Home() {
                 <a href="#benefits" className="text-gray-700 hover:text-sky-600 transition-colors px-3 py-2 text-sm font-medium">Benefits</a>
                 <a href="#testimonials" className="text-gray-700 hover:text-sky-600 transition-colors px-3 py-2 text-sm font-medium">Testimonials</a>
               </nav>
-              <div className="flex items-center space-x-4">
+              <div className="hidden md:flex items-center space-x-4">
                 <Button variant="ghost" asChild className="px-5 py-2.5 rounded-full">
                   <Link href="/login">Sign In</Link>
                 </Button>
@@ -70,9 +76,68 @@ export default function Home() {
                   <Link href="/register">Get Started</Link>
                 </Button>
               </div>
+              
+              {/* Mobile menu button */}
+              <div className="md:hidden">
+                <button
+                  className="p-2 rounded-md text-gray-700 hover:text-sky-600 focus:outline-none"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+                  {mobileMenuOpen ? (
+                    <X className="h-6 w-6" />
+                  ) : (
+                    <Menu className="h-6 w-6" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
+        
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden glass-navbar border-t border-white/20 shadow-lg">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              <a
+                href="#features"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-sky-600 hover:bg-sky-50"
+                onClick={handleNavLinkClick}
+              >
+                Features
+              </a>
+              <a
+                href="#benefits"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-sky-600 hover:bg-sky-50"
+                onClick={handleNavLinkClick}
+              >
+                Benefits
+              </a>
+              <a
+                href="#testimonials"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-sky-600 hover:bg-sky-50"
+                onClick={handleNavLinkClick}
+              >
+                Testimonials
+              </a>
+              <div className="pt-4 flex flex-col space-y-2">
+                <Link 
+                  href="/login"
+                  className="px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-sky-600 hover:bg-sky-50"
+                  onClick={handleNavLinkClick}
+                >
+                  Sign In
+                </Link>
+                <Link 
+                  href="/register"
+                  className="px-3 py-2 rounded-md text-base font-medium bg-sky-500 text-white hover:bg-sky-600 text-center"
+                  onClick={handleNavLinkClick}
+                >
+                  Get Started
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
