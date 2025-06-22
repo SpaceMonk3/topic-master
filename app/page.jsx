@@ -21,7 +21,7 @@ export default function Home() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-sky-500"></div>
       </div>
     );
   }
@@ -41,10 +41,10 @@ export default function Home() {
               <span className="text-xl font-bold text-gray-900">Topic Master</span>
             </div>
             <div className="space-x-4">
-              <Button variant="ghost" asChild>
+              <Button variant="ghost" asChild className="px-5 py-2.5">
                 <Link href="/login">Sign In</Link>
               </Button>
-              <Button asChild className="bg-indigo-600 hover:bg-indigo-700">
+              <Button asChild className="bg-sky-500 hover:bg-sky-600 px-5 py-2.5">
                 <Link href="/register">Get Started</Link>
               </Button>
             </div>
@@ -58,7 +58,7 @@ export default function Home() {
           <div className="text-center">
             <div className="flex justify-center mb-8">
               <div className="relative">
-                <Brain className="h-20 w-20 text-indigo-600" />
+                <Brain className="h-20 w-20 text-sky-500" />
                 <Sparkles className="h-8 w-8 text-amber-500 absolute -top-2 -right-2 animate-bounce" />
               </div>
             </div>
@@ -80,7 +80,7 @@ export default function Home() {
                   <Zap className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button size="lg" variant="outline" asChild className="px-6 py-3">
                 <Link href="/login">Sign In</Link>
               </Button>
             </div>
@@ -151,7 +151,7 @@ export default function Home() {
               
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="h-6 w-6 text-sky-500 flex-shrink-0 mt-0.5" />
                   <div>
                     <h3 className="font-semibold text-gray-900">Intelligent Question Generation</h3>
                     <p className="text-gray-600">Our AI analyzes your content to create meaningful questions that test comprehension, not just memorization</p>
@@ -159,7 +159,7 @@ export default function Home() {
                 </div>
                 
                 <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="h-6 w-6 text-sky-500 flex-shrink-0 mt-0.5" />
                   <div>
                     <h3 className="font-semibold text-gray-900">Adaptive Difficulty</h3>
                     <p className="text-gray-600">Choose from easy, medium, or hard difficulty levels to match your learning goals</p>
@@ -167,7 +167,7 @@ export default function Home() {
                 </div>
                 
                 <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="h-6 w-6 text-sky-500 flex-shrink-0 mt-0.5" />
                   <div>
                     <h3 className="font-semibold text-gray-900">Secure & Private</h3>
                     <p className="text-gray-600">Your notes and quiz data are securely stored with Firebase authentication and encryption</p>
@@ -175,7 +175,7 @@ export default function Home() {
                 </div>
                 
                 <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="h-6 w-6 text-sky-500 flex-shrink-0 mt-0.5" />
                   <div>
                     <h3 className="font-semibold text-gray-900">Detailed Analytics</h3>
                     <p className="text-gray-600">Track your performance over time with comprehensive analytics and insights</p>
@@ -185,14 +185,14 @@ export default function Home() {
             </div>
             
             <div className="relative">
-              <div className="bg-gradient-to-r from-sky-500 to-emerald-500 rounded-lg p-8 text-white">
+              <div className="bg-gradient-to-r from-sky-500 to-sky-600 rounded-lg p-8 text-white">
                 <div className="text-center space-y-4">
                   <Users className="h-16 w-16 mx-auto opacity-80" />
                   <h3 className="text-2xl font-bold">Ready to Get Started?</h3>
-                  <p className="text-indigo-100">
+                  <p className="text-sky-100">
                     Join thousands of students who are already using Topic Master to improve their learning outcomes
                   </p>
-                  <Button size="lg" variant="secondary" className="mt-6" asChild>
+                  <Button size="lg" variant="secondary" className="mt-6 px-6 py-3" asChild>
                     <Link href="/register">
                       Create Your First Quiz
                       <Sparkles className="ml-2 h-5 w-5" />
