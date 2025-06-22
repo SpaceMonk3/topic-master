@@ -53,7 +53,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-sky-50 overflow-hidden">
+    <div className="min-h-screen bg-[#f0f7ff] overflow-hidden">
       {/* Glass Navbar */}
       <header className="fixed top-0 left-0 right-0 z-50">
         <div className={`glass-navbar ${scrolled ? 'scrolled' : ''}`}>
@@ -350,27 +350,68 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
-                <div className="flex items-center mb-4">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg key={star} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.799-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-6">
-                  "Topic Master has completely transformed how I study. The AI-generated quizzes are incredibly relevant and have helped me improve my grades significantly."
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
-                  <div>
-                    <h4 className="font-bold text-gray-900">Random Kid</h4>
-                    <p className="text-sm text-gray-500">University Student</p>
-                  </div>
+            {/* High School Student Testimonial */}
+            <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
+              <div className="flex items-center mb-4">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg key={star} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.799-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                ))}
+              </div>
+              <p className="text-gray-600 mb-6">
+                "Topic Master helped me ace my AP Biology exam! I uploaded my class notes and the quizzes it generated were exactly what I needed to test my knowledge. The explanations for wrong answers helped me understand concepts I was struggling with."
+              </p>
+              <div className="flex items-center">
+                <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
+                <div>
+                  <h4 className="font-bold text-gray-900">Emma Rodriguez</h4>
+                  <p className="text-sm text-gray-500">High School Student</p>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* University Student Testimonial */}
+            <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
+              <div className="flex items-center mb-4">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg key={star} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.799-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                ))}
+              </div>
+              <p className="text-gray-600 mb-6">
+                "As a med student with mountains of lecture notes, Topic Master has been a game-changer. The AI creates challenging questions that really test my understanding, and the analytics help me focus my study time on weaker areas. Definitely worth it!"
+              </p>
+              <div className="flex items-center">
+                <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
+                <div>
+                  <h4 className="font-bold text-gray-900">Alex Chen</h4>
+                  <p className="text-sm text-gray-500">University Student</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Teacher Testimonial */}
+            <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
+              <div className="flex items-center mb-4">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg key={star} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.799-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                ))}
+              </div>
+              <p className="text-gray-600 mb-6">
+                "I recommend Topic Master to all my students. It saves me hours of creating practice tests, and the variety of questions it generates helps students develop deeper critical thinking. The analytics also give me insights into which topics need more attention in class."
+              </p>
+              <div className="flex items-center">
+                <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
+                <div>
+                  <h4 className="font-bold text-gray-900">Dr. Sarah Johnson</h4>
+                  <p className="text-sm text-gray-500">Science Teacher</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
