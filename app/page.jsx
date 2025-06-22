@@ -360,7 +360,7 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-gray-600 mb-6">
-                "Topic Master helped me ace my AP Biology exam! I uploaded my class notes and the quizzes it generated were exactly what I needed to test my knowledge. The explanations for wrong answers helped me understand concepts I was struggling with."
+                &quot;Topic Master helped me ace my AP Biology exam! I uploaded my class notes and the quizzes it generated were exactly what I needed to test my knowledge. The explanations for wrong answers helped me understand concepts I was struggling with.&quot;
               </p>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
@@ -381,7 +381,7 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-gray-600 mb-6">
-                "As a med student with mountains of lecture notes, Topic Master has been a game-changer. The AI creates challenging questions that really test my understanding, and the analytics help me focus my study time on weaker areas. Definitely worth it!"
+                &quot;As a med student with mountains of lecture notes, Topic Master has been a game-changer. The AI creates challenging questions that really test my understanding, and the analytics help me focus my study time on weaker areas. Definitely worth it!&quot;
               </p>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
@@ -402,7 +402,7 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-gray-600 mb-6">
-                "I recommend Topic Master to all my students. It saves me hours of creating practice tests, and the variety of questions it generates helps students develop deeper critical thinking. The analytics also give me insights into which topics need more attention in class."
+                &quot;I recommend Topic Master to all my students. It saves me hours of creating practice tests, and the variety of questions it generates helps students develop deeper critical thinking. The analytics also give me insights into which topics need more attention in class.&quot;
               </p>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
