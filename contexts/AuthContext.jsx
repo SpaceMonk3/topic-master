@@ -69,15 +69,53 @@ export function AuthProvider({ children }) {
 
     // Handle photo upload if provided
     if (photoFile) {
-      const fileExtension = photoFile.name.split('.').pop();
-      const storageRef = ref(storage, `profile_images/${auth.currentUser.uid}.${fileExtension}`);
-      
-      // Upload the file
-      const snapshot = await uploadBytes(storageRef, photoFile);
-      
-      // Get the download URL
-      const photoURL = await getDownloadURL(snapshot.ref);
-      updates.photoURL = photoURL;
+      try {
+        const fileExtension = photoFile.name.split('.').pop();
+        const fileName = `${auth.currentUser.uid}.${fileExtension}`;
+        const storageRef = ref(storage, `profile_images/${auth.currentUser.uid}/${fileName}`);
+        
+        // Set metadata with content type
+        const metadata = {
+          contentType: photoFile.type,
+          customMetadata: {
+            'uploaded-by': auth.currentUser.uid,
+            'original-filename': photoFile.name
+          }
+        };
+        
+        // Upload with metadata and retry logic
+        let attempt = 0;
+        const maxAttempts = 3;
+        let uploadSuccessful = false;
+        
+        while (!uploadSuccessful && attempt < maxAttempts) {
+          try {
+            attempt++;
+            console.log(`Attempting upload (${attempt}/${maxAttempts})...`);
+            
+            // Upload the file with metadata
+            const snapshot = await uploadBytes(storageRef, photoFile, metadata);
+            
+            // Get the download URL
+            const photoURL = await getDownloadURL(snapshot.ref);
+            updates.photoURL = photoURL;
+            uploadSuccessful = true;
+            console.log('Upload successful!');
+          } catch (error) {
+            console.error(`Upload attempt ${attempt} failed:`, error);
+            
+            if (attempt >= maxAttempts) {
+              throw new Error(`Failed to upload profile image after ${maxAttempts} attempts: ${error.message}`);
+            }
+            
+            // Wait before retrying
+            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+          }
+        }
+      } catch (error) {
+        console.error('Error uploading profile image:', error);
+        throw new Error(`Profile image upload failed: ${error.message}`);
+      }
     }
 
     await updateProfile(auth.currentUser, updates);

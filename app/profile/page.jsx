@@ -57,15 +57,79 @@ export default function ProfilePage() {
     }
   }, [user]);
 
+  const optimizeImage = (file) => {
+    return new Promise((resolve, reject) => {
+      // Maximum width/height for profile image
+      const MAX_SIZE = 800;
+      
+      // Create a FileReader to read the image
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        
+        img.onload = () => {
+          // Create a canvas to resize the image
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          
+          // Resize logic to maintain aspect ratio
+          if (width > height) {
+            if (width > MAX_SIZE) {
+              height = Math.round((height * MAX_SIZE) / width);
+              width = MAX_SIZE;
+            }
+          } else {
+            if (height > MAX_SIZE) {
+              width = Math.round((width * MAX_SIZE) / height);
+              height = MAX_SIZE;
+            }
+          }
+          
+          canvas.width = width;
+          canvas.height = height;
+          
+          // Draw the resized image on the canvas
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          // Convert the canvas to a Blob
+          canvas.toBlob((blob) => {
+            // Create a new File from the Blob
+            const optimizedFile = new File([blob], file.name, {
+              type: 'image/jpeg',
+              lastModified: Date.now()
+            });
+            
+            resolve(optimizedFile);
+          }, 'image/jpeg', 0.7); // 0.7 quality gives good balance between size and quality
+        };
+        
+        img.onerror = (error) => {
+          reject(error);
+        };
+      };
+      
+      reader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setPhotoFile(file);
+      // Show preview immediately for better UX
       const reader = new FileReader();
       reader.onloadend = () => {
         setPhotoPreview(reader.result);
       };
       reader.readAsDataURL(file);
+      
+      // Set the original file for now, we'll optimize it during upload
+      setPhotoFile(file);
     }
   };
 
@@ -75,10 +139,31 @@ export default function ProfilePage() {
     setIsUpdating(true);
 
     try {
-      // Update profile
+      // Validate image file size before attempting upload
+      if (photoFile && photoFile.size > 5 * 1024 * 1024) {
+        throw new Error('Profile picture must be less than 5MB');
+      }
+
+      let optimizedPhotoFile = photoFile;
+      
+      // Optimize the image if it's an image file
+      if (photoFile && photoFile.type.startsWith('image/')) {
+        try {
+          optimizedPhotoFile = await optimizeImage(photoFile);
+          console.log('Image optimized:', 
+            `Original: ${(photoFile.size / 1024).toFixed(2)}KB`, 
+            `Optimized: ${(optimizedPhotoFile.size / 1024).toFixed(2)}KB`
+          );
+        } catch (err) {
+          console.warn('Failed to optimize image, using original:', err);
+          // Continue with the original file if optimization fails
+        }
+      }
+
+      // Update profile with optimized image
       await updateUserProfile({
         displayName,
-        photoFile
+        photoFile: optimizedPhotoFile
       });
 
       toast({
@@ -90,7 +175,35 @@ export default function ProfilePage() {
       setPhotoFile(null);
     } catch (error) {
       console.error('Error updating profile:', error);
-      setError(error.message || 'Failed to update profile');
+      
+      // Show more specific error messages based on error code
+      if (error.code) {
+        switch (error.code) {
+          case 'storage/unauthorized':
+            setError('You do not have permission to upload this file. Please check your account permissions.');
+            break;
+          case 'storage/quota-exceeded':
+            setError('Storage quota exceeded. Please try again later or contact support.');
+            break;
+          case 'storage/retry-limit-exceeded':
+            setError('Upload failed due to network issues. Please check your connection and try again.');
+            break;
+          case 'storage/invalid-checksum':
+          case 'storage/server-file-wrong-size':
+            setError('File upload corrupted. Please try again.');
+            break;
+          default:
+            setError(error.message || 'Failed to update profile');
+        }
+      } else {
+        setError(error.message || 'Failed to update profile');
+      }
+      
+      toast({
+        title: 'Error',
+        description: 'Failed to update profile. Please try again.',
+        variant: 'destructive',
+      });
     } finally {
       setIsUpdating(false);
     }
