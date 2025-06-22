@@ -102,8 +102,8 @@ export function NotesUploader({ isOpen, onClose, onSuccess }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4 backdrop-blur-sm">
+      <div className="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b">
           <div>
@@ -114,7 +114,7 @@ export function NotesUploader({ isOpen, onClose, onSuccess }) {
           </div>
           <button 
             onClick={onClose}
-            className="h-8 w-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100"
+            className="h-9 w-9 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
           >
             <X className="h-4 w-4" />
           </button>
@@ -138,6 +138,7 @@ export function NotesUploader({ isOpen, onClose, onSuccess }) {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
+                  className="rounded-lg px-4 py-2"
                 />
               </div>
 
@@ -148,20 +149,21 @@ export function NotesUploader({ isOpen, onClose, onSuccess }) {
                   placeholder="e.g., Biology, Chemistry, History"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
+                  className="rounded-lg px-4 py-2"
                 />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="content">Notes Content</Label>
                 <div className="space-y-4">
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-gray-400 transition-colors">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
                     <Upload className="mx-auto h-10 w-10 text-gray-400" />
-                    <div className="mt-2">
+                    <div className="mt-3">
                       <Label htmlFor="file-upload" className="cursor-pointer">
                         <span className="block text-sm font-medium text-gray-900">
                           Upload text file
                         </span>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 mt-1">
                           Text files only (.txt)
                         </span>
                       </Label>
@@ -183,13 +185,14 @@ export function NotesUploader({ isOpen, onClose, onSuccess }) {
                     onChange={(e) => setContent(e.target.value)}
                     rows={8}
                     required
+                    className="rounded-lg px-4 py-2"
                   />
                 </div>
               </div>
             </div>
 
             {/* Footer */}
-            <div className="flex justify-end space-x-2 pt-4 border-t mt-6">
+            <div className="flex justify-end space-x-3 pt-5 border-t mt-6">
               <Button 
                 type="button" 
                 variant="outline" 
@@ -198,12 +201,13 @@ export function NotesUploader({ isOpen, onClose, onSuccess }) {
                   if (onClose) onClose();
                 }}
                 disabled={isUploading}
+                className="px-5"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit" 
-                className="bg-indigo-600 hover:bg-indigo-700"
+                className="bg-indigo-600 hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all px-5"
                 disabled={isUploading}
               >
                 {isUploading ? (

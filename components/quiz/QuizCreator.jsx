@@ -281,13 +281,13 @@ export function QuizCreator() {
               <div className="space-y-2">
                 <Label htmlFor="difficulty">Difficulty Level</Label>
                 <Select value={difficulty} onValueChange={setDifficulty}>
-                  <SelectTrigger>
+                  <SelectTrigger className="rounded-lg">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="easy">Easy</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="hard">Hard</SelectItem>
+                  <SelectContent className="bg-white border shadow-lg rounded-lg">
+                    <SelectItem value="easy" className="cursor-pointer hover:bg-gray-100">Easy</SelectItem>
+                    <SelectItem value="medium" className="cursor-pointer hover:bg-gray-100">Medium</SelectItem>
+                    <SelectItem value="hard" className="cursor-pointer hover:bg-gray-100">Hard</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -298,14 +298,14 @@ export function QuizCreator() {
                   value={numberOfQuestions.toString()} 
                   onValueChange={(value) => setNumberOfQuestions(parseInt(value))}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="rounded-lg">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="5">5 Questions</SelectItem>
-                    <SelectItem value="10">10 Questions</SelectItem>
-                    <SelectItem value="15">15 Questions</SelectItem>
-                    <SelectItem value="20">20 Questions</SelectItem>
+                  <SelectContent className="bg-white border shadow-lg rounded-lg">
+                    <SelectItem value="5" className="cursor-pointer hover:bg-gray-100">5 Questions</SelectItem>
+                    <SelectItem value="10" className="cursor-pointer hover:bg-gray-100">10 Questions</SelectItem>
+                    <SelectItem value="15" className="cursor-pointer hover:bg-gray-100">15 Questions</SelectItem>
+                    <SelectItem value="20" className="cursor-pointer hover:bg-gray-100">20 Questions</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

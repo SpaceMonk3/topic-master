@@ -94,8 +94,8 @@ export function Navigation() {
                         </Avatar>
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56" align="end" forceMount>
-                      <div className="flex items-center justify-start gap-2 p-2">
+                    <DropdownMenuContent className="w-56 bg-white border shadow-lg rounded-lg" align="end" forceMount>
+                      <div className="flex items-center justify-start gap-2 p-3 border-b">
                         <div className="flex flex-col space-y-1 leading-none">
                           {user.displayName && (
                             <p className="font-medium">{user.displayName}</p>
@@ -106,11 +106,11 @@ export function Navigation() {
                         </div>
                       </div>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer hover:bg-gray-100 rounded-md">
                         <User className="mr-2 h-4 w-4" />
                         <span>Profile</span>
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={handleLogout}>
+                      <DropdownMenuItem onClick={handleLogout} className="cursor-pointer hover:bg-gray-100 rounded-md">
                         <LogOut className="mr-2 h-4 w-4" />
                         <span>Log out</span>
                       </DropdownMenuItem>
