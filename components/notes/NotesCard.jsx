@@ -101,7 +101,7 @@ export function NotesCard({ note, onDelete, onCreateQuiz }) {
           <Button 
             variant="outline" 
             size="sm" 
-            className="w-full rounded-full"
+            className="w-full rounded-full px-5 py-2.5"
             onClick={handleCreateQuiz}
           >
             <BookOpen className="mr-2 h-4 w-4" />
@@ -182,7 +182,7 @@ export function NotesCard({ note, onDelete, onCreateQuiz }) {
                   Close
                 </Button>
                 <Button 
-                  className="bg-indigo-600 hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all px-5"
+                  className="bg-sky-500 hover:bg-sky-600 shadow-md hover:shadow-lg transition-all px-5 py-2.5"
                   onClick={() => {
                     setShowPreview(false);
                     handleCreateQuiz();

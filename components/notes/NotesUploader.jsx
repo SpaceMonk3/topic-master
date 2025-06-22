@@ -207,7 +207,7 @@ export function NotesUploader({ isOpen, onClose, onSuccess }) {
               </Button>
               <Button 
                 type="submit" 
-                className="bg-indigo-600 hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all px-5"
+                className="bg-sky-500 hover:bg-sky-600 shadow-md hover:shadow-lg transition-all px-5 py-2.5"
                 disabled={isUploading}
               >
                 {isUploading ? (

@@ -42,7 +42,7 @@ export default function QuizzesPage() {
   if (loading || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-sky-500"></div>
       </div>
     );
   }
@@ -61,7 +61,7 @@ export default function QuizzesPage() {
             </div>
             <Button 
               onClick={() => router.push('/create')}
-              className="bg-indigo-600 hover:bg-indigo-700"
+              className="bg-sky-500 hover:bg-sky-600 px-5 py-2.5"
             >
               <Plus className="h-4 w-4 mr-2" />
               Create Quiz
@@ -93,7 +93,7 @@ export default function QuizzesPage() {
                   </p>
                   <Button 
                     onClick={() => router.push('/create')}
-                    className="bg-indigo-600 hover:bg-indigo-700"
+                    className="bg-sky-500 hover:bg-sky-600 px-5 py-2.5"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Create Your First Quiz
@@ -152,7 +152,7 @@ export default function QuizzesPage() {
 
                       <Button 
                         onClick={() => router.push(`/quiz/${quiz.id}`)}
-                        className="w-full bg-indigo-600 hover:bg-indigo-700"
+                        className="w-full bg-sky-500 hover:bg-sky-600 px-5 py-2.5"
                       >
                         <Play className="h-4 w-4 mr-2" />
                         Take Quiz

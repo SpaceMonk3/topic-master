@@ -123,7 +123,7 @@ export default function NotesPage() {
                 Refresh
               </Button>
               <Button 
-                className="bg-indigo-600 hover:bg-indigo-700"
+                className="bg-sky-500 hover:bg-sky-600"
                 onClick={openDialog}
               >
                 <Plus className="h-4 w-4 mr-2" />
@@ -156,7 +156,7 @@ export default function NotesPage() {
                     Upload your lecture notes to start creating personalized quizzes
                   </p>
                   <Button 
-                    className="bg-indigo-600 hover:bg-indigo-700"
+                    className="bg-sky-500 hover:bg-sky-600"
                     onClick={openDialog}
                   >
                     <Upload className="h-4 w-4 mr-2" />

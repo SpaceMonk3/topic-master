@@ -39,7 +39,7 @@ export function LoginForm() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <Brain className="h-12 w-12 text-indigo-600" />
+            <Brain className="h-12 w-12 text-sky-500" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900">Welcome Back</h1>
           <p className="text-gray-600 mt-2">Sign in to your Topic Master account</p>
@@ -90,7 +90,7 @@ export function LoginForm() {
             <CardFooter className="flex flex-col space-y-4">
               <Button 
                 type="submit" 
-                className="w-full bg-indigo-600 hover:bg-indigo-700" 
+                className="w-full bg-sky-500 hover:bg-sky-600 px-5 py-2.5" 
                 disabled={isLoading}
               >
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -99,7 +99,7 @@ export function LoginForm() {
               
               <div className="text-center text-sm text-gray-600">
                 Don&apos;t have an account?{' '}
-                <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+                <Link href="/register" className="font-medium text-sky-500 hover:text-sky-400">
                   Sign up
                 </Link>
               </div>

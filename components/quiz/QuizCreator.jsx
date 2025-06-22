@@ -352,7 +352,7 @@ export function QuizCreator() {
 
             <Button 
               type="submit" 
-              className="w-full bg-indigo-600 hover:bg-indigo-700"
+              className="w-full bg-sky-500 hover:bg-sky-600 px-5 py-2.5"
               disabled={isGenerating || !content.trim()}
             >
               {isGenerating ? (

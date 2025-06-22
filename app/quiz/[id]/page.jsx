@@ -51,7 +51,7 @@ export default function QuizPage() {
   if (loading || !user || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-sky-500"></div>
       </div>
     );
   }
@@ -167,7 +167,7 @@ export default function QuizPage() {
                 <Button 
                   size="lg" 
                   onClick={() => setHasStarted(true)}
-                  className="bg-indigo-600 hover:bg-indigo-700"
+                  className="bg-sky-500 hover:bg-sky-600 px-6 py-3"
                 >
                   <Play className="mr-2 h-5 w-5" />
                   Start Quiz

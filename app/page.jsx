@@ -37,7 +37,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-2">
-              <Brain className="h-8 w-8 text-indigo-600" />
+              <Brain className="h-8 w-8 text-sky-500" />
               <span className="text-xl font-bold text-gray-900">Topic Master</span>
             </div>
             <div className="space-x-4">
@@ -65,7 +65,7 @@ export default function Home() {
             
             <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
               <span className="block">Personalized Learning</span>
-              <span className="block text-indigo-600">Quiz Generator</span>
+              <span className="block text-sky-500">Quiz Generator</span>
             </h1>
             
             <p className="mt-6 max-w-2xl mx-auto text-xl text-gray-500">
@@ -74,7 +74,7 @@ export default function Home() {
             </p>
             
             <div className="mt-10 flex justify-center space-x-4">
-              <Button size="lg" asChild className="bg-indigo-600 hover:bg-indigo-700">
+              <Button size="lg" asChild className="bg-sky-500 hover:bg-sky-600 px-6 py-3">
                 <Link href="/register">
                   Start Creating Quizzes
                   <Zap className="ml-2 h-5 w-5" />
@@ -103,8 +103,8 @@ export default function Home() {
           <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Brain className="h-6 w-6 text-indigo-600" />
+                <div className="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Brain className="h-6 w-6 text-sky-500" />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">AI-Powered Generation</h3>
                 <p className="text-gray-600">
@@ -185,7 +185,7 @@ export default function Home() {
             </div>
             
             <div className="relative">
-              <div className="bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-lg p-8 text-white">
+              <div className="bg-gradient-to-r from-sky-500 to-emerald-500 rounded-lg p-8 text-white">
                 <div className="text-center space-y-4">
                   <Users className="h-16 w-16 mx-auto opacity-80" />
                   <h3 className="text-2xl font-bold">Ready to Get Started?</h3>
@@ -210,7 +210,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <Brain className="h-6 w-6 text-indigo-600" />
+              <Brain className="h-6 w-6 text-sky-500" />
               <span className="text-lg font-bold text-gray-900">Topic Master</span>
             </div>
             <p className="text-gray-600">

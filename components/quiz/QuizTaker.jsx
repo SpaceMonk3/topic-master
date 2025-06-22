@@ -297,7 +297,7 @@ export function QuizTaker({ quiz }) {
         <Button
           onClick={handleNext}
           disabled={selectedAnswer === null}
-          className="bg-indigo-600 hover:bg-indigo-700"
+          className="bg-sky-500 hover:bg-sky-600 px-5 py-2.5"
         >
           {currentQuestion === quiz.questions.length - 1 ? 'Finish Quiz' : 'Next'}
           <ArrowRight className="h-4 w-4 ml-2" />

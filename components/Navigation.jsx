@@ -51,7 +51,7 @@ export function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/dashboard" className="flex items-center space-x-2">
-              <Brain className="h-8 w-8 text-indigo-600" />
+              <Brain className="h-8 w-8 text-sky-500" />
               <span className="font-bold text-xl text-gray-900">Topic Master</span>
             </Link>
             
@@ -66,7 +66,7 @@ export function Navigation() {
                     className={cn(
                       "inline-flex items-center px-1 pt-1 text-sm font-medium transition-colors duration-200",
                       pathname === item.href
-                        ? "text-indigo-600 border-b-2 border-indigo-600"
+                        ? "text-sky-500 border-b-2 border-sky-500"
                         : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
                     )}
                   >
@@ -156,7 +156,7 @@ export function Navigation() {
                   className={cn(
                     "flex items-center px-3 py-2 text-base font-medium transition-colors duration-200",
                     pathname === item.href
-                      ? "text-indigo-600 bg-indigo-50 border-r-4 border-indigo-600"
+                      ? "text-sky-500 bg-sky-50 border-r-4 border-sky-500"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                   )}
                   onClick={() => setMobileMenuOpen(false)}

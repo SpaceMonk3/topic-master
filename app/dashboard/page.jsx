@@ -190,7 +190,7 @@ export default function DashboardPage() {
   if (loading || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-sky-500"></div>
       </div>
     );
   }
@@ -226,8 +226,8 @@ export default function DashboardPage() {
             <Card className="hover:shadow-lg transition-shadow cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4">
-                  <div className="p-2 bg-indigo-100 rounded-lg">
-                    <Plus className="h-6 w-6 text-indigo-600" />
+                  <div className="p-2 bg-sky-100 rounded-lg">
+                    <Plus className="h-6 w-6 text-sky-500" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">Create Quiz</h3>
@@ -322,7 +322,7 @@ export default function DashboardPage() {
                   <Brain className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-600 mb-4">No quiz activity yet</p>
                   <Link href="/create">
-                    <Button>Create Your First Quiz</Button>
+                    <Button className="bg-sky-500 hover:bg-sky-600 px-5 py-2.5">Create Your First Quiz</Button>
                   </Link>
                 </div>
               )}
