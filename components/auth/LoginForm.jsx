@@ -39,7 +39,9 @@ export function LoginForm() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <Brain className="h-12 w-12 text-sky-500" />
+            <Link href="/" className="cursor-pointer">
+              <Brain className="h-12 w-12 text-sky-500 hover:text-sky-600 transition-colors" />
+            </Link>
           </div>
           <h1 className="text-3xl font-bold text-gray-900">Welcome Back</h1>
           <p className="text-gray-600 mt-2">Sign in to your Topic Master account</p>
