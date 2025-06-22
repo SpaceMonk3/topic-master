@@ -8,7 +8,6 @@ import { NotesUploader } from '@/components/notes/NotesUploader';
 import { NotesCard } from '@/components/notes/NotesCard';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { getUserLectureNotes, deleteLectureNote } from '@/lib/services/quiz';
 import { FileText, Upload, Plus, RefreshCw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -86,21 +85,12 @@ export default function NotesPage() {
   };
 
   const openDialog = () => {
-    console.log("Opening notes uploader dialog - setting isDialogOpen to true");
     setIsDialogOpen(true);
-    console.log("isDialogOpen after setting:", true);
   };
 
   const closeDialog = () => {
-    console.log("Closing notes uploader dialog - setting isDialogOpen to false");
     setIsDialogOpen(false);
-    console.log("isDialogOpen after setting:", false);
   };
-
-  // Debug dialog state changes
-  useEffect(() => {
-    console.log("Dialog state changed:", isDialogOpen);
-  }, [isDialogOpen]);
 
   if (loading || !user) {
     return (
@@ -190,11 +180,7 @@ export default function NotesPage() {
         </div>
       </main>
 
-      {/* Debug info */}
-      <div className="fixed bottom-4 right-4 bg-black text-white p-2 text-xs rounded opacity-50">
-        Dialog state: {isDialogOpen ? 'Open' : 'Closed'}
-      </div>
-
+      {/* Notes Uploader Modal */}
       <NotesUploader
         isOpen={isDialogOpen}
         onClose={closeDialog}
