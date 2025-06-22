@@ -11,7 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { saveLectureNotes } from '@/lib/services/quiz';
 import { Loader2, Upload, FileText } from 'lucide-react';
 
-export function NotesUploader({ open, setOpen, onSuccess }) {
+export function NotesUploader({ open, onOpenChange, onSuccess }) {
   const [title, setTitle] = useState('');
   const [subject, setSubject] = useState('');
   const [content, setContent] = useState('');
@@ -88,7 +88,7 @@ export function NotesUploader({ open, setOpen, onSuccess }) {
       if (onSuccess) {
         onSuccess();
       }
-      setOpen(false);
+      onOpenChange(false);
     } catch (error) {
       console.error('Error saving notes:', error);
       setError(error.message || 'Failed to save notes');
@@ -98,7 +98,7 @@ export function NotesUploader({ open, setOpen, onSuccess }) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Upload Lecture Notes</DialogTitle>
@@ -179,7 +179,7 @@ export function NotesUploader({ open, setOpen, onSuccess }) {
               variant="outline" 
               onClick={() => {
                 resetForm();
-                setOpen(false);
+                onOpenChange(false);
               }}
               disabled={isUploading}
             >

@@ -8,7 +8,6 @@ import { NotesUploader } from '@/components/notes/NotesUploader';
 import { NotesCard } from '@/components/notes/NotesCard';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { getUserLectureNotes, deleteLectureNote } from '@/lib/services/quiz';
 import { FileText, Upload, Plus, RefreshCw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -191,9 +190,9 @@ export default function NotesPage() {
 
       <NotesUploader
         open={isDialogOpen}
-        setOpen={setIsDialogOpen}
+        onOpenChange={setIsDialogOpen}
         onSuccess={loadNotes}
       />
     </div>
   );
-} 
+}
