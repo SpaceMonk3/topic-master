@@ -6,9 +6,15 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  updateProfile
+  updateProfile,
+  updateEmail,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  deleteUser
 } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { auth, storage } from '@/lib/firebase';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 
 const AuthContext = createContext(undefined);
 
@@ -55,12 +61,95 @@ export function AuthProvider({ children }) {
     await signOut(auth);
   };
 
+  const updateUserProfile = async ({ displayName, photoFile }) => {
+    if (!auth.currentUser) throw new Error('No authenticated user');
+
+    const updates = {};
+    if (displayName) updates.displayName = displayName;
+
+    // Handle photo upload if provided
+    if (photoFile) {
+      const fileExtension = photoFile.name.split('.').pop();
+      const storageRef = ref(storage, `profile_images/${auth.currentUser.uid}.${fileExtension}`);
+      
+      // Upload the file
+      const snapshot = await uploadBytes(storageRef, photoFile);
+      
+      // Get the download URL
+      const photoURL = await getDownloadURL(snapshot.ref);
+      updates.photoURL = photoURL;
+    }
+
+    await updateProfile(auth.currentUser, updates);
+
+    // Update local user state
+    setUser(prevUser => ({
+      ...prevUser,
+      ...updates
+    }));
+
+    return updates;
+  };
+
+  const updateUserEmail = async (newEmail, password) => {
+    if (!auth.currentUser) throw new Error('No authenticated user');
+
+    // Re-authenticate user before changing email
+    const credential = EmailAuthProvider.credential(auth.currentUser.email, password);
+    await reauthenticateWithCredential(auth.currentUser, credential);
+    
+    // Update email
+    await updateEmail(auth.currentUser, newEmail);
+    
+    // Update local user state
+    setUser(prevUser => ({
+      ...prevUser,
+      email: newEmail
+    }));
+  };
+
+  const changePassword = async (currentPassword, newPassword) => {
+    if (!auth.currentUser) throw new Error('No authenticated user');
+
+    // Re-authenticate user before changing password
+    const credential = EmailAuthProvider.credential(auth.currentUser.email, currentPassword);
+    await reauthenticateWithCredential(auth.currentUser, credential);
+    
+    // Update password
+    await updatePassword(auth.currentUser, newPassword);
+  };
+
+  const deleteAccount = async (password) => {
+    if (!auth.currentUser) throw new Error('No authenticated user');
+
+    // Re-authenticate user before deleting account
+    const credential = EmailAuthProvider.credential(auth.currentUser.email, password);
+    await reauthenticateWithCredential(auth.currentUser, credential);
+    
+    // Delete profile image if it exists
+    if (auth.currentUser.photoURL && auth.currentUser.photoURL.includes('firebase')) {
+      try {
+        const photoRef = ref(storage, auth.currentUser.photoURL);
+        await deleteObject(photoRef);
+      } catch (error) {
+        console.error('Error deleting profile image:', error);
+      }
+    }
+    
+    // Delete user account
+    await deleteUser(auth.currentUser);
+  };
+
   const value = {
     user,
     loading,
     login,
     register,
     logout,
+    updateUserProfile,
+    updateUserEmail,
+    changePassword,
+    deleteAccount
   };
 
   return (

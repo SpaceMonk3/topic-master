@@ -45,6 +45,18 @@ export function Navigation() {
     }
   };
 
+  // Get user's display name initial or email initial for avatar
+  const getUserInitial = () => {
+    if (!user) return '';
+    if (user.displayName && user.displayName.trim()) {
+      return user.displayName[0].toUpperCase();
+    }
+    if (user.email) {
+      return user.email[0].toUpperCase();
+    }
+    return 'U';
+  };
+
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,17 +97,23 @@ export function Navigation() {
                 <div className="hidden md:block">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                        <Avatar className="h-8 w-8">
+                      <Button variant="ghost" className="relative p-0 h-10 w-10 rounded-full">
+                        <Avatar className="h-10 w-10">
                           <AvatarImage src={user.photoURL} alt={user.displayName || user.email} />
                           <AvatarFallback>
-                            {user.displayName ? user.displayName[0].toUpperCase() : user.email[0].toUpperCase()}
+                            {getUserInitial()}
                           </AvatarFallback>
                         </Avatar>
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56 bg-white border shadow-lg rounded-lg" align="end" forceMount>
-                      <div className="flex items-center justify-start gap-2 p-3 border-b">
+                      <div className="flex items-center gap-3 p-3 border-b">
+                        <Avatar className="h-10 w-10">
+                          <AvatarImage src={user.photoURL} alt={user.displayName || user.email} />
+                          <AvatarFallback>
+                            {getUserInitial()}
+                          </AvatarFallback>
+                        </Avatar>
                         <div className="flex flex-col space-y-1 leading-none">
                           {user.displayName && (
                             <p className="font-medium">{user.displayName}</p>
@@ -106,10 +124,12 @@ export function Navigation() {
                         </div>
                       </div>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem className="cursor-pointer hover:bg-gray-100 rounded-md">
-                        <User className="mr-2 h-4 w-4" />
-                        <span>Profile</span>
-                      </DropdownMenuItem>
+                      <Link href="/profile">
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-100 rounded-md">
+                          <User className="mr-2 h-4 w-4" />
+                          <span>Profile</span>
+                        </DropdownMenuItem>
+                      </Link>
                       <DropdownMenuItem onClick={handleLogout} className="cursor-pointer hover:bg-gray-100 rounded-md">
                         <LogOut className="mr-2 h-4 w-4" />
                         <span>Log out</span>
@@ -119,7 +139,18 @@ export function Navigation() {
                 </div>
 
                 {/* Mobile menu button */}
-                <div className="md:hidden">
+                <div className="md:hidden flex items-center">
+                  <Button
+                    variant="ghost"
+                    className="relative p-0 h-10 w-10 rounded-full mr-2"
+                  >
+                    <Avatar className="h-10 w-10">
+                      <AvatarImage src={user.photoURL} alt={user.displayName || user.email} />
+                      <AvatarFallback>
+                        {getUserInitial()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -168,10 +199,10 @@ export function Navigation() {
             })}
             <div className="border-t pt-4 pb-3">
               <div className="flex items-center px-4">
-                <Avatar className="h-10 w-10">
+                <Avatar className="h-12 w-12">
                   <AvatarImage src={user.photoURL} alt={user.displayName || user.email} />
                   <AvatarFallback>
-                    {user.displayName ? user.displayName[0].toUpperCase() : user.email[0].toUpperCase()}
+                    {getUserInitial()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="ml-3">
@@ -182,6 +213,15 @@ export function Navigation() {
                 </div>
               </div>
               <div className="mt-3 space-y-1">
+                <Link href="/profile">
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start px-4"
+                  >
+                    <User className="mr-3 h-5 w-5" />
+                    Profile
+                  </Button>
+                </Link>
                 <Button
                   variant="ghost"
                   className="w-full justify-start px-4"
