@@ -1,4 +1,4 @@
-# Topic Master - Personalized Learning Quiz Generator
+# Topic Master - Personalized Quizzes from your study notes
 
 A web application that generates personalized multiple-choice quizzes from lecture notes using OpenAI's GPT-4.1-nano API. Built with Next.js, Firebase, and modern web technologies.
 
