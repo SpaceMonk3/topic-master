@@ -6,8 +6,8 @@ import { Toaster } from '@/components/ui/toaster';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Topic Master - Personalized Learning Quiz Generator',
-  description: 'Generate personalized quizzes from your lecture notes using AI',
+  title: 'Topic Master - Personalized Quizzes From Your Study Notes',
+  description: 'Generate personalized quizzes from your lecture notes to study smarter',
 };
 
 export default function RootLayout({ children }) {
